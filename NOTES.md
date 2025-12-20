@@ -310,7 +310,7 @@ xrandr --output HDMI-A-0 --mode 1920x1080 --rate 100 --right-of DisplayPort-2
         shellHook = ''
           zsh
           echo "Welcome to Dev Shell"
-          export LD_LIBRARY_PATH=${pkgs.wayland}/lib:${pkgs.lib.getLib pkgs.libGL}/lib:${pkgs.lib.getLib pkgs.libGL}/lib:$LD_LIBRARY_PATH
+          export LD_LIBRARY_PATH=${pkgs.wayland}/lib:${pkgs.lib.getLib pkgs.libGL}/lib:$LD_LIBRARY_PATH
         '';
 
       };
