@@ -71,10 +71,14 @@ sudo nixos-rebuild switch
 - `username` и `homeDirectory` в `nixos/home.nix`.
 - `userName` и `userEmail` в `modules/home-manager/terminal/git.nix`.
 
+Если видеокарта не от AMD, то надо сделать это:
+- Удалить `rocmSupport = true;` в файле `flake.nix`
+- Удалить `videoDrivers = [ "amdgpu" ];` и `deviceSection = ''Option "TearFree" "True"'';` в конце файла `modules/nixos/xserver.nix`. Возможно надо включить `videoDrivers = [ "nvidia" ];`, если видеокарта от Nvidia. Но лучше почитать https://nixos.wiki/wiki/Nvidia. Для графики Intel читать это https://nixos.wiki/wiki/Intel_Graphics. Мб для Nvidia и Intel не обязательно добавлять настройки и удалить amd конфиги будет достаточно для запуска.
+- Удалить всю категорию настроек `amdgpu = {}`, удалить `boot.initrd.kernelModules`, и удалить всю категорию настроек `systemd.tmpfiles.rules = let` в файле `modules/nixos/hardware.nix`
+
 А это можно донастроить уже в готовой системе
 - Путь до `home` в `shit/qt5ct/qt5ct.conf` и `shit/qt6ct/qt6ct.conf`.
 - Параметры мониторов закомментированы в файле `modules/home-manager/wm/bspwm/bspwm.nix`. Можно указать по желанию. Команда xrandr покажет доступные значения и имена мониторов.
-- Если видеокарта не от amd, то, надо удалить `videoDrivers` в `modules/nixos/xserver.nix`, `boot.initrd.kernelModules` и всю категорию настроек `amdgpu` в `modules/nixos/hardware.nix`. Это настройки для amd gpu, чтоб не было тиринга на x11
 - Если надо задать симлинки, то для этого есть файл `modules/home-manager/symlinks.nix`. Там сейчас мои симлинки, их лучше удалить. Чтоб файл заработал, надо раскомментировать `./symlinks.nix` в файле `modules/home-manager/bundle.nix`.
 - Если надо монтировать другие диски, то для этого есть файл `modules/nixos/filesystems.nix`. Там сейчас мой второй ссд. Чтоб файл заработал, надо раскомментировать `./filesystems.nix` в файле `modules/nixos/bundle.nix`.
 - Если нужна гибернация, то её можно настроить в `modules/nixos/hibernate.nix`. Там надо указать uuid и офсет для swap файла. Чтоб файл заработал, надо раскомментировать `./hibernate.nix` в файле `modules/nixos/bundle.nix`.
