@@ -71,7 +71,7 @@ sudo nixos-rebuild switch
 - `username` и `homeDirectory` в `nixos/home.nix`.
 - `userName` и `userEmail` в `modules/home-manager/terminal/git.nix`.
 
-Если видеокарта не от AMD, то надо сделать это:
+Если видеокарта не от AMD, то надо сделать это. Если видеокарта от AMD, то стоит убедиться, что сделано наоборот, то есть включены нужные параметры.
 - Удалить `rocmSupport = true;` в файле `flake.nix`
 - Удалить `videoDrivers = [ "amdgpu" ];` и `deviceSection = ''Option "TearFree" "True"'';` в конце файла `modules/nixos/xserver.nix`. Возможно надо включить `videoDrivers = [ "nvidia" ];`, если видеокарта от Nvidia. Но лучше почитать https://nixos.wiki/wiki/Nvidia. Для графики Intel читать это https://nixos.wiki/wiki/Intel_Graphics. Мб для Nvidia и Intel не обязательно добавлять настройки и удалить amd конфиги будет достаточно для запуска.
 - Удалить всю категорию настроек `amdgpu = {}`, удалить `boot.initrd.kernelModules`, и удалить всю категорию настроек `systemd.tmpfiles.rules = let` в файле `modules/nixos/hardware.nix`
