@@ -46,6 +46,6 @@
     # Мб видеодрайвер можно не указывать
     # https://discourse.nixos.org/t/amd-gpu-optimal-settings/27648/3
 
-    videoDrivers = [ "modesetting" ]; # https://nixos.wiki/wiki/Nvidia
+    videoDrivers = [ "nvidia" ]; #modesetting https://nixos.wiki/wiki/Nvidia
   };
 }
