@@ -88,6 +88,21 @@ in {
     ];
   };
 
+  # 🔹 РАЗРЕШИТЬ СЛОМАННЫЕ ПАКЕТЫ (временно, для обхода ошибки)
+  #  nixpkgs.config.allowBroken = true;
+  
+  # 🔹 Опционально: разрешить неуниверсальные пакеты
+  #  nixpkgs.config.allowUnfree = true;
+
+  # ... остальная конфигурация ...
+  
+  # Пример правильной структуры:
+  networking.hostName = "nixos";
+  
+  hardware.nvidia.open = false;  # ← это уже должно быть
+  
+  # ...
+
   system.stateVersion = "24.05"; # Don't change it
 
 }
