@@ -1,7 +1,7 @@
 { pkgs, pkgs2, spkgs, inputs, ... }:
 
 let
-  username = "buliway";
+  username = "toru";
 in {
   imports = [
     /etc/nixos/hardware-configuration.nix
@@ -76,8 +76,16 @@ in {
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
     # For nix-gaming
-    substituters = ["https://nix-gaming.cachix.org"];
-    trusted-public-keys = ["nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="];
+    substituters = [
+      "https://nix-gaming.cachix.org"
+      "https://cache.nixos.org"
+      "https://niri.cachix.org" # для niri
+      "https://vicinae.cachix.org" # для использование Vicinae
+    ];
+    trusted-public-keys = [
+      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      "niri.cachix.org-1" # не закончил
+    ];
   };
 
   system.stateVersion = "24.05"; # Don't change it

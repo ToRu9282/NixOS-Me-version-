@@ -4,8 +4,8 @@
 
     # lfs.enable = true; # https://git-lfs.com/
 
-    userName  = "Buliway";
-    userEmail = "me@buliway.ru";
+    userName  = "ToRu9282";
+    userEmail = "tamerlan260907@gmail.com";
 
     # aliases = {
 		#   pu = "push";

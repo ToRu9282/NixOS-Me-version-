@@ -8,8 +8,8 @@
   ];
 
   home = {
-    username = "buliway";
-    homeDirectory = "/home/buliway";
+    username = "toru";
+    homeDirectory = "/home/toru";
 
     # Если с каким-то софтом будут проблемы, то можно перенести из "packages.nix" сюда
     # Например, я читал, что если ставить vscode через configuration.nix, а не через пакеты юзера,

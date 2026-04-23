@@ -14,6 +14,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # niri и его flake-обертка
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Noctalia shell (тема/оболочка)
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # для темизации
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +43,6 @@
     system = "x86_64-linux";
     config = {
       allowUnfree = true;
-      rocmSupport = true;
       permittedInsecurePackages = [
         "python-2.7.18.8"
         "electron-25.9.0"

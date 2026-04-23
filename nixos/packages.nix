@@ -415,8 +415,8 @@
     #   # withOpenASAR = true; # Оптимизатор дискрода
     #   withVencord = true; # Имба плагины                               # TODO: Настройки надо сделать декларативными
     # })
-    pkgs2.discord
-    pkgs2.telegram-desktop
+    # pkgs2.discord
+    # pkgs2.telegram-desktop
 
     ###########
     ## Games ##

@@ -3,15 +3,6 @@
 
 { pkgs, ... }: {
   hardware = { # Параметры для 24.05 и unstable могут сильно отличаться
-    amdgpu = {
-      opencl.enable = true; # Enable OpenCL support using ROCM runtime library.
-      # amdvlk = { # Гавно лаганое, лучше radv юзать (radeon vulkan)
-      #   enable = true; # Enable AMDVLK Vulkan driver.
-      #   support32Bit.enable = true; # Enable 32-bit driver support.
-      #   supportExperimental.enable = true; # Enable Experimental features support.
-      #   # settings = {}; # Runtime settings for AMDVLK to be configured /etc/amd/amdVulkanSettings.cfg.
-      # };
-    };
     
     graphics = { # hardware.opengl переименован в hardware.graphics в unstable ветке
       enable = true;
@@ -50,19 +41,6 @@
   # systemd.tmpfiles.rules = [ # Legacy
   #   "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   # ];
-  systemd.tmpfiles.rules = let
-    rocmEnv = pkgs.symlinkJoin {
-      name = "rocm-combined";
-      paths = with pkgs.rocmPackages; [
-        rocblas
-        hipblas
-        clr
-      ];
-    }; in [
-    "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
-  ];
-
-  boot.initrd.kernelModules = [ "amdgpu" ]; # Мб не обязательно
 
   # Для AMD существует два драйвера Vulkan
   # Один официальный от AMD - amdvlk
