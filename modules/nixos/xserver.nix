@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, inputs, ... }: {
 
   services.displayManager = {
     defaultSession = "none+bspwm"; # only effective for GDM, LightDM and SDDM
@@ -47,5 +47,20 @@
     # https://discourse.nixos.org/t/amd-gpu-optimal-settings/27648/3
 
     videoDrivers = [ "nvidia" ]; #modesetting https://nixos.wiki/wiki/Nvidia
+
+    # 🔹 Wayland session для niri (не конфликтует с X11)
+    # SDDM автоматически обнаружит .desktop файлы, но можно добавить явно:
   };
+
+  services.displayManager.sessionPackages = [
+    (pkgs.writeTextDir "share/wayland-sessions/niri.desktop" ''
+      [Desktop Entry]
+      Name=Niri (Wayland)
+      Comment=Scrollable-tiling Wayland compositor
+      Exec=${inputs.niri.packages.${pkgs.system}.niri}/bin/niri
+      Type=Application
+      DesktopNames=niri
+      Keywords=wayland;compositor;tiling;
+    '')
+  ];
 }

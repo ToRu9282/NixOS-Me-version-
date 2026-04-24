@@ -2,12 +2,12 @@
   description = "A very basic flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # Вторая unstable ветка, которую я буду обновлять отдельно
     # Нужна если я не хочу обновлять систему, но хочу обновить конкретный софт
-    # Просто задам этому софту репу pkgs2 и обновлю только её
-    nixpkgs2.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    # Просто задним числом пишу эту строку и обновлю только её
+    nixpkgs2.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -33,46 +33,41 @@
     };
 
     nix-gaming = { # Удобно ставить некоторые игры
-      url = "github:fufexan/nix-gaming"; 
+      url = "github:fufexan/nix-gaming";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: 
-  let
-    system = "x86_64-linux";
-    config = {
-      allowUnfree = true;
-      permittedInsecurePackages = [
-        "python-2.7.18.8"
-        "electron-25.9.0"
-      ];
-    };
-    pkgs = import nixpkgs {
-      inherit system;
-      inherit config;
-    };
-    pkgs2 = import inputs.nixpkgs2 {
-      inherit system;
-      inherit config;
-    };
-    spkgs = import inputs.nixpkgs-stable {
-      inherit system;
-      inherit config;
-    };
-  in
-  {
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit spkgs; inherit pkgs2; inherit inputs; };
-        inherit pkgs;
+  outputs = { self, nixpkgs, niri, noctalia, stylix, home-manager, nix-gaming, ... }@inputs:
+    let
+      system = "x86_64-linux";
+      config = {
+        allowUnfree = true;
+        permittedInsecurePackages = [
+          "python-2.7.18.8"
+          "electron-25.9.0"
+        ];
+      };
+    in {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
+        
+        # 🔹 Передаём inputs во все модули
+        specialArgs = { inherit inputs; };
+        
         modules = [
           ./nixos/configuration.nix
-          inputs.home-manager.nixosModules.default
-          inputs.stylix.nixosModules.stylix
+          home-manager.nixosModules.home-manager
+          stylix.nixosModules.stylix
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = { inherit inputs; };
+              users.toru = ./nixos/home.nix;
+            };
+          }
         ];
       };
     };
-  };
 }

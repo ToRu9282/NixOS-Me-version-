@@ -35,5 +35,12 @@
     ./wm/bspwm/bspwm.nix
     ./wm/bspwm/polybar.nix
     ./wm/bspwm/sxhkd.nix
+
+      ##############
+      ## WM (Wayland) ##
+      ##############
+  
+      # 🔹 Niri + Noctalia (экспериментально, пока не включать)
+      # ./wm/niri/niri.nix
   ];
 }

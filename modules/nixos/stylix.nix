@@ -18,6 +18,24 @@
       name = "Bibata-Modern-Ice";
       size = 24; # default = 32
     };
+    
+    # 🔹 Применяем к приложениям
+    targets = {
+      # Терминалы
+      alacritty.enable = true;
+      kitty.enable = true;
+      
+      # Графические приложения
+      gtk.enable = true;
+      qt.enable = true;
+      
+      # Shell
+      zsh.enable = true;
+      starship.enable = true;
+      
+      # 🔹 Для niri: цвета подставятся в config.kdl через stylix,
+      # но можно вручную использовать ${config.lib.stylix.colors.*}
+    };
 
     fonts = {
 

@@ -18,7 +18,12 @@ in {
   # };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest; # Ядро линуха, ласт версия
+    #kernelPackages = pkgs.linuxPackages_latest; # Ядро линуха, ласт версия
+    kernelParams = [
+    "nvidia-drm.modeset=1"      # Обязательно для Wayland
+    "nvidia-drm.fbdev=1"       # Резервный framebuffer
+    "pkgs.linuxPackages_latest"
+  ];
     # kernelParams = [ # https://nixos.wiki/wiki/AMD_GPU#Dual_Monitors
     #   "video=1920x1080"
     # ];
@@ -93,15 +98,16 @@ in {
   
   # 🔹 Опционально: разрешить неуниверсальные пакеты
   #  nixpkgs.config.allowUnfree = true;
-
-  # ... остальная конфигурация ...
   
   # Пример правильной структуры:
   networking.hostName = "nixos";
   
   hardware.nvidia.open = false;  # ← это уже должно быть
   
-  # ...
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";  # Wayland для Qt/Electron
+    LIBVA_DRIVER_NAME = "nvidia";  # Аппаратное декодирование
+  };
 
   system.stateVersion = "24.05"; # Don't change it
 
